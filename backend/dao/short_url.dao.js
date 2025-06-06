@@ -2,7 +2,7 @@ import shortUrl from "../models/short_url.model.js";
 
 export const saveShortUrl=async (short_url, url, userId) => {
     try{
-        const newUrl=shortUrl({
+        const newUrl=new shortUrl({
             full_url: url,
             short_url: short_url
         });
