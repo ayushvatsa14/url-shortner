@@ -1,4 +1,6 @@
-import { findUserByEmail, createUser } from "../dao/user.dao";
+import { findUserByEmail, createUser, getAllUserUrlsDao } from "../dao/user.dao.js";
+import jsonwebtoken from "jsonwebtoken";
+import bcrypt from 'bcrypt';
 
 export const userSignUp=async (req, res) => {
     try{
@@ -31,7 +33,7 @@ export const userSignUp=async (req, res) => {
         const token=await jsonwebtoken.sign({id: newUser._id}, process.env.JWT_SECRET, {expiresIn: "1h"});
         req.user=newUser;
 
-        res.cookies("accessToken", token, {
+        res.cookie("accessToken", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV==="production",
             sameSite: "Lax",
@@ -40,7 +42,8 @@ export const userSignUp=async (req, res) => {
 
         return res.status(200).json({
             success: true,
-            message: 'User created successfully'
+            message: 'User created successfully',
+            user: newUser
         });
     } catch(error){
         console.log(error.message);
@@ -106,7 +109,8 @@ export const userLogin=async (req, res) => {
 
         return res.status(200).json({
             success: true,
-            message: "Login successful"
+            message: "Login successful",
+            user
         });
 
     } catch(error){
@@ -118,3 +122,22 @@ export const userLogin=async (req, res) => {
         });
     }
 };
+
+export const logout_user=async (req, res) => {
+    res.clearCookie("accessToken", cookieOptions)
+    return res.status(200).json({message:"Logout success"});
+}
+
+export const get_current_user=async (req, res) => {
+    return res.status(200).json({user:req.user});
+}
+
+export const getAllUserUrls=async (req, res) => {
+    const {_id}=req.user;
+    const urls=await getAllUserUrlsDao(_id);
+
+    return res.status(200).json({
+        message: "success",
+        urls
+    });
+}

@@ -7,7 +7,7 @@ dotenv.config();
 
 export const createShortUrl=async (req, res) => {
     const data=req.body;
-    const userId=req.user;
+    const userId=req.user?._id;
 
     if(!/^https?:\/\//i.test(data.url)){
         data.url='https://' + data.url;
@@ -23,7 +23,7 @@ export const createShortUrl=async (req, res) => {
         });
     }
 
-    res.status(200).json({
+    return res.status(200).json({
         success: true,
         message: "Short url created successfully",
         short_url: process.env.APP_URL + short_url

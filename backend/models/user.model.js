@@ -1,19 +1,19 @@
 import mongoose from "mongoose";
 
 const userSchema= new mongoose.Schema({
-    nmae: {
+    name: {
         type: String,
-        requred: true
+        required: true
     },
     email: {
         type: String,
-        requred: true
+        required: true
     },
     password: {
         type: String,
-        requred: true
+        required: true
     }
 });
 
-const urlUserSchema=mongoose.model("urlUserSchema", userSchema);
-export default urlUserSchema;
+const urlUser=mongoose.model("urlUser", userSchema);
+export default urlUser;
