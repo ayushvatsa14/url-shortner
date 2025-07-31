@@ -1,16 +1,12 @@
 ## Data Models (Schemas)
-  While I don’t have access to the exact code, most MERN‑based URL shorteners follow a common structure:
-
-  URL
-    Fields: urlCode, longUrl, shortUrl, dateCreated, clickCount, optionally userId (if authenticated), optional custom alias, expiration, analytics.
-    Purpose: Stores mapping between long and short URLs, plus click tracking and metadata.
+  1. URL
+     - Fields: urlCode, longUrl, shortUrl, optionally userId (if authenticated), optional custom alias, expiration, analytics.
+     - Purpose: Stores mapping between long and short URLs, plus click tracking and metadata.
     
-  User (if authentication is implemented)
-    Fields: name, email, passwordHash, role, list of urlsCreated
-    Purpose: Manage authenticated users, allow them to create/manage their URLs.
-
-  Analytics (optional/sub‑collection)
-    Could store per‑click data: timestamp, ip, referrer, browser, device, etc.
+  2. User (if authentication is implemented)
+     - Fields: name, email, passwordHash, role, list of urlsCreated
+     - Purpose: Manage authenticated users, allow them to create/manage their URLs.
+     - Analytics: Could store per‑click data
 
 ## Workflow Overview
    1. HTTP Request to Shorten URL
